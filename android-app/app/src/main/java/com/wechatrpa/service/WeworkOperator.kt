@@ -47,7 +47,7 @@ class WeworkOperator {
         const val TAB_CONTACTS = "com.tencent.wework:id/hn7"     // 底部Tab-通讯录
 //        const val SEARCH_BTN = "com.tencent.wework:id/hfp"       // 主页搜索按钮
 //        const val SEARCH_INPUT = "com.tencent.wework:id/cd7"     // 搜索输入框
-        / --- 主页 ---
+        // --- 主页 ---
         const val TAB_BAR_CONTAINER = "com.tencent.wework:id/mc7" // 底部页签栏容器
         const val TAB_TEXT_ID = "com.tencent.wework:id/hoc"      // 页签文字ID (消息、通讯录等通用)
         const val SEARCH_BTN = "com.tencent.wework:id/n4e"       // 顶部搜索按钮 (从 hfp 更新)
