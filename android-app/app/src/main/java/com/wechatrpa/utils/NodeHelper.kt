@@ -202,9 +202,21 @@ object NodeHelper {
         return when (target) {
             AppTarget.WECHAT ->
                 findByExactText("通讯录") != null &&
-                    (findByExactText("发现") != null || findByExactText("我") != null)
-            AppTarget.WEWORK ->
-                findByExactText("消息") != null && findByExactText("通讯录") != null
+                        (findByExactText("发现") != null || findByExactText("我") != null)
+
+            AppTarget.WEWORK -> {
+                // 1. 检查是否存在底部页签栏容器
+                val hasTabBar = findFirstById("com.tencent.wework:id/mc7") != null
+
+                // 2. 检查侧边栏是否遮挡 (it0 是侧边栏容器)
+                val sideBar = findFirstById("com.tencent.wework:id/it0")
+                val isSideBarOpen = sideBar != null && sideBar.isVisibleToUser
+
+                // 3. 必须包含关键文字且侧边栏未打开
+                hasTabBar && !isSideBarOpen &&
+                        findByExactText("消息") != null &&
+                        findByExactText("通讯录") != null
+            }
         }
     }
 }
