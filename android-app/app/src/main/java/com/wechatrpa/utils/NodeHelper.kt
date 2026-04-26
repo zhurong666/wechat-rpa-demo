@@ -135,15 +135,17 @@ object NodeHelper {
      * @param text 要查找的文本
      * @param maxScrolls 最大滚动次数
      */
-    fun scrollAndFindText(text: String, maxScrolls: Int = 10): AccessibilityNodeInfo? {
+    fun scrollAndFindNode(maxScrolls: Int = 5, predicate: (AccessibilityNodeInfo) -> Boolean): AccessibilityNodeInfo? {
         for (i in 0..maxScrolls) {
-            val node = findByExactText(text)
-            if (node != null) return node
+            // 在当前屏幕查找所有 TextView，并根据自定义逻辑匹配
+            val allTexts = findByClassName("android.widget.TextView")
+            val match = allTexts.find { predicate(it) }
+            if (match != null) return match
 
-            // 查找可滚动的列表并向下滚动
+            // 没找到则尝试滚动
             val scrollable = findScrollables().firstOrNull() ?: break
             service?.scrollForward(scrollable) ?: break
-            Thread.sleep(800) // 等待滚动动画完成
+            Thread.sleep(800)
         }
         return null
     }

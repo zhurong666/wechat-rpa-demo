@@ -152,7 +152,12 @@ class WeworkOperator {
         Thread.sleep(DELAY_LONG)
 
         // 点击搜索结果
-        val resultNode = NodeHelper.scrollAndFindText(contactName, maxScrolls = 3)
+        val resultNode = NodeHelper.scrollAndFindNode(maxScrolls = 3) { node ->
+            val text = node.text?.toString() ?: ""
+            // 逻辑：文字完全相等，或者是以 "测试A(" 开头
+            text == contactName || text.startsWith("$contactName(")
+        }
+
         if (resultNode != null) {
             service?.clickNode(resultNode)
             Thread.sleep(DELAY_PAGE_LOAD)
